@@ -1,10 +1,15 @@
 var express     = require("express");
 var app         = express();
+
+// system configuration
 var morgan      = require("morgan");
 var port        = 3000;
 var mongoose    = require("mongoose");
 var config      = require("./app/config/config")
+
+// routers
 var indexRouter = require("./app/routes/index");
+var usersRouter = require("./app/routes/users");
 
 mongoose.connect( config.database);
 
@@ -15,6 +20,7 @@ app.use( express.static("./app/public"));
 app.use( morgan("dev") );
 
 app.use("/", indexRouter );
+app.use("/api/users", usersRouter );
 
 //tell app to listen on port
 app.listen( port, function(){
