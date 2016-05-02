@@ -5,7 +5,8 @@ var app         = express();
 var morgan      = require("morgan");
 var port        = 3000;
 var mongoose    = require("mongoose");
-var config      = require("./app/config/config")
+var config      = require("./app/config/config");
+var bodyParser  = require("body-parser");
 
 // routers
 var indexRouter = require("./app/routes/index");
@@ -18,6 +19,9 @@ mongoose.connect( config.database);
 app.use( express.static("./app/public"));
 // set some logging middleware
 app.use( morgan("dev") );
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use("/", indexRouter );
 app.use("/api/users", usersRouter );
