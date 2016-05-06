@@ -12,6 +12,7 @@ var cookieParser = require("cookie-parser");
 // routers
 var indexRouter = require("./app/routes/indexRouter");
 var usersRouter = require("./app/routes/usersRouter");
+var loginRouter = require("./app/routes/loginRouter");
 
 mongoose.connect( config.database);
 
@@ -28,6 +29,7 @@ app.use(cookieParser());
 
 //routing
 app.use("/", indexRouter );
+app.use("/login", loginRouter )
 app.use("/api/users", usersRouter );
 
 //tell app to listen on port

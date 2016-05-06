@@ -2,10 +2,11 @@ var User = require("../models/user");
 var passport = require("passport");
 var configFile = require("./config.js");
 var JwtStrategy = require("passport-jwt").Strategy;
+// var ExtractJwt = require("passport-jwt").ExtractJwt;
 
 var LocalStrategy = require("passport-local")
 
-
+// verifies username & password for us
 passport.use( new LocalStrategy(
   function( username, password, done ) {
     User.findOne({ username: username }, function( err, dbUser ) {
@@ -57,7 +58,7 @@ var verify = function( jwtPayload, done){
   });
 };
 
-passport.use( new JwtStrategy(options, verify);
+passport.use( new JwtStrategy(options, verify) );
 
 
 module.exports = passport;
