@@ -42,6 +42,11 @@ options.jwtFromRequest = function(req){
     token = req.cookies["jwt_token"];
   }
 
+  // this doesnt work in theory due to the lack of multi part request body support
+  // if( req && req.body.jwt_token){
+  //   token = req.body.jwt_token;
+  // }
+
   return token;
 };
 

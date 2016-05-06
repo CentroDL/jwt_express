@@ -17,6 +17,7 @@ usersRouter.post("/", function(req, res){
 // this registers the passport jwt strategy to fire before all subsequent routes in this file
 usersRouter.use( passport.authenticate("jwt", { session: false }) );
 
+// api/users
 usersRouter.get("/", function(req, res){
   res.json({message: "hello"});
 });
