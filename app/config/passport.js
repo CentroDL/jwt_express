@@ -5,6 +5,31 @@ var JwtStrategy = require("passport-jwt").Strategy;
 
 var LocalStrategy = require("passport-local")
 
+
+passport.use( new LocalStrategy(
+  function( username, password, done ) {
+    User.findOne({ username: username }, function( err, dbUser ) {
+      if (err) { return done(err); }
+
+      if (!dbUser) {
+        'Incorrect username.'
+        return done(null, false);
+      }
+
+      if (!dbUser.authenticate(password)) {
+        // 'Incorrect password.'
+        return done(null, false);
+      }
+
+      return done(null, dbUser);
+    });
+  })
+);
+
+
+
+
+
 // configuration options for extracting/handling our JWT
 var options = {};
 
@@ -34,6 +59,8 @@ var verify = function( jwtPayload, done){
 
 passport.use( new JwtStrategy(options, verify);
 
+
+module.exports = passport;
 
 
 

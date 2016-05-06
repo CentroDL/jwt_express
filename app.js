@@ -2,15 +2,16 @@ var express     = require("express");
 var app         = express();
 
 // system configuration
-var morgan      = require("morgan");
-var port        = 3000;
-var mongoose    = require("mongoose");
-var config      = require("./app/config/config");
-var bodyParser  = require("body-parser");
+var morgan       = require("morgan");
+var port         = 3000;
+var mongoose     = require("mongoose");
+var config       = require("./app/config/config");
+var bodyParser   = require("body-parser");
+var cookieParser = require("cookie-parser");
 
 // routers
-var indexRouter = require("./app/routes/index");
-var usersRouter = require("./app/routes/users");
+var indexRouter = require("./app/routes/indexRouter");
+var usersRouter = require("./app/routes/usersRouter");
 
 mongoose.connect( config.database);
 
@@ -20,9 +21,12 @@ app.use( express.static("./app/public"));
 // set some logging middleware
 app.use( morgan("dev") );
 
+// set request parsing middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.user(cookieParser());
 
+//routing
 app.use("/", indexRouter );
 app.use("/api/users", usersRouter );
 
