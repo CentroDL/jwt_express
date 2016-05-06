@@ -1,2 +1,43 @@
-// this file defines the auth "Strategy" we're going to use
-// in this case JSON web tokens
+var User = require("../models/user");
+var passport = require("passport");
+var configFile = require("./config.js");
+var JwtStrategy = require("passport-jwt").Strategy;
+
+var LocalStrategy = require("passport-local")
+
+// configuration options for extracting/handling our JWT
+var options = {};
+
+options.secretOrKey    = configFile.secret;
+options.jwtFromRequest = function(req){
+  var token = null;
+  // you'll need cookie-parser since we're extracting from cookies
+  if( req && req.cookies){
+    token = req.cookies["jwt_token"];
+  }
+
+  return token;
+};
+
+var verify = function( jwtPayload, done){
+  // find the user based on the "subject" property of the jwtPayload Object
+  User.findOne({ id: jwtPayload.sub }, function(err, user){
+      if(err){
+        return done(err, false);
+      } else if(user){
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+  });
+};
+
+passport.use( new JwtStrategy(options, verify);
+
+
+
+
+
+
+
+
