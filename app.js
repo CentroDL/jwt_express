@@ -24,7 +24,7 @@ app.use( morgan("dev") );
 // set request parsing middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.user(cookieParser());
+app.use(cookieParser());
 
 //routing
 app.use("/", indexRouter );
