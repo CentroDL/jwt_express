@@ -1,17 +1,17 @@
 var express = require("express");
-var router  = express.Router();
+var usersRouter  = express.Router();
 
 var User     = require("../models/user");
-var passport = require("passport");
+var passport = require("../config/passport");
 
-router.get("/", function(req, res){
+usersRouter.get("/", function(req, res){
   res.json({message: "hello"});
 });
 
+// this registers the passport jwt strategy to fire before all subsequent routes in this file
+usersRouter.use( passport.authenticate("jwt", { session: false }) );
 
-router.post("/", function(req, res){
-  console.log( req.body.user );
-
+usersRouter.post("/", function(req, res){
   User.create( req.body.user, function(err, dbUser){
     if(err){ return res.status(500).json(err); }
     // if(err){ console.log(err); }
@@ -21,5 +21,5 @@ router.post("/", function(req, res){
 }); // post
 
 
-module.exports = router;
+module.exports = usersRouter;
 
