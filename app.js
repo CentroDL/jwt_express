@@ -14,7 +14,7 @@ var indexRouter = require("./app/routes/indexRouter");
 var usersRouter = require("./app/routes/usersRouter");
 var loginRouter = require("./app/routes/loginRouter");
 
-mongoose.connect( config.database);
+mongoose.connect( process.env.MONGODB_URI || config.database);
 
 
 // set static routes

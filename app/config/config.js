@@ -1,5 +1,5 @@
 module.exports = {
-  secret: "pleasedonteverpushthistogithub",
+  secret: process.env.JWT_SECRET || "pleasedonteverpushthistogithub",
   database: "mongodb://localhost/owlr"
 }
 
